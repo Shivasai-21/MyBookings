@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  movie:
+    container_name: moviecontainer
+    image: movieimage
+    ports:
+      - "1111:80"
+
+  bus:
+    container_name: buscontainer
+    image: busimage
+    ports:
+      - "2222:80"
+
+  flight:
+    container_name: flightcontainer
+    image: flightimage
+    ports:
+      - "3333:80"
+
+  train:
+    container_name: traincontainer
+    image: trainimage
+    ports:
+      - "4444:80"
+

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Train Ticket Booking</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #0ea5e9);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      opacity: 0.8;
+    }
+
+    .hero {
+      height: 480px;
+      background: linear-gradient(rgba(15,23,42,0.65), rgba(15,23,42,0.7)),
+      url('https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=1400&auto=format&fit=crop') center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .search-box {
+      background: white;
+      width: 100%;
+      max-width: 1100px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .search-box h2 {
+      margin-bottom: 20px;
+      color: #0f172a;
+      font-size: 34px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    input,
+    select,
+    button {
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+    }
+
+    button {
+      background: #0ea5e9;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0284c7;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 60px 0 25px;
+      font-size: 38px;
+      color: #0f172a;
+    }
+
+    .train-container {
+      width: 92%;
+      margin: auto;
+      display: grid;
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .train-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .train-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .train-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .train-name h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .train-number {
+      color: #64748b;
+    }
+
+    .status {
+      background: #16a34a;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .route {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .station {
+      text-align: center;
+    }
+
+    .station h2 {
+      margin-bottom: 5px;
+    }
+
+    .duration {
+      text-align: center;
+      color: #64748b;
+    }
+
+    .train-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .features {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      background: #e0f2fe;
+      color: #0284c7;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+      color: #0ea5e9;
+    }
+
+    .booking-section {
+      width: 92%;
+      margin: auto;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      margin-bottom: 60px;
+    }
+
+    .booking-section h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .coach {
+      background: #e2e8f0;
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 25px;
+    }
+
+    .coach-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .seat-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .seat {
+      width: 70px;
+      height: 70px;
+      background: #cbd5e1;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .seat:hover {
+      background: #7dd3fc;
+    }
+
+    .seat.selected {
+      background: #0ea5e9;
+      color: white;
+    }
+
+    .seat.booked {
+      background: #ef4444;
+      color: white;
+      cursor: not-allowed;
+    }
+
+    .summary {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .summary h3 {
+      margin-bottom: 12px;
+    }
+
+    .summary button {
+      margin-top: 20px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 10px;
+      background: #0ea5e9;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @media(max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .route,
+      .train-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .seat-layout {
+        grid-template-columns: repeat(3, 65px);
+      }
+
+      .seat {
+        width: 65px;
+        height: 65px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>RailConnect</h1>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Trains</a>
+      <a href="#">Bookings</a>
+      <a href="#">Support</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="search-box">
+      <h2>Book Train Tickets Online</h2>
+
+      <div class="form-grid">
+        <input type="text" placeholder="From Station" />
+        <input type="text" placeholder="To Station" />
+        <input type="date" />
+
+        <select>
+          <option>All Classes</option>
+          <option>Sleeper</option>
+          <option>AC 3 Tier</option>
+          <option>AC 2 Tier</option>
+          <option>First Class</option>
+        </select>
+
+        <select>
+          <option>1 Passenger</option>
+          <option>2 Passengers</option>
+          <option>3 Passengers</option>
+          <option>4 Passengers</option>
+        </select>
+
+        <button onclick="searchTrains()">Search Trains</button>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="section-title">Available Trains</h2>
+
+  <section class="train-container">
+
+    <div class="train-card">
+      <div class="train-top">
+        <div class="train-name">
+          <h3>Rajdhani Express</h3>
+          <p class="train-number">Train No: 12951</p>
+        </div>
+
+        <div class="status">Running On Time</div>
+      </div>
+
+      <div class="route">
+        <div class="station">
+          <h2>18:20</h2>
+          <p>Hyderabad</p>
+        </div>
+
+        <div class="duration">
+          <p>10h 15m</p>
+          <p>Direct Route</p>
+        </div>
+
+        <div class="station">
+          <h2>04:35</h2>
+          <p>Delhi</p>
+        </div>
+      </div>
+
+      <div class="train-bottom">
+        <div class="features">
+          <span class="feature">AC Coach</span>
+          <span class="feature">Food Included</span>
+          <span class="feature">WiFi</span>
+        </div>
+
+        <div>
+          <div class="price">₹1,850</div>
+          <button onclick="scrollToBooking('Rajdhani Express')">Book Ticket</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="train-card">
+      <div class="train-top">
+        <div class="train-name">
+          <h3>Shatabdi Express</h3>
+          <p class="train-number">Train No: 12025</p>
+        </div>
+
+        <div class="status">Seats Available</div>
+      </div>
+
+      <div class="route">
+        <div class="station">
+          <h2>07:00</h2>
+          <p>Chennai</p>
+        </div>
+
+        <div class="duration">
+          <p>5h 30m</p>
+          <p>Superfast</p>
+        </div>
+
+        <div class="station">
+          <h2>12:30</h2>
+          <p>Bangalore</p>
+        </div>
+      </div>
+
+      <div class="train-bottom">
+        <div class="features">
+          <span class="feature">Chair Car</span>
+          <span class="feature">Fast Service</span>
+          <span class="feature">Meals</span>
+        </div>
+
+        <div>
+          <div class="price">₹950</div>
+          <button onclick="scrollToBooking('Shatabdi Express')">Book Ticket</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="train-card">
+      <div class="train-top">
+        <div class="train-name">
+          <h3>Duronto Express</h3>
+          <p class="train-number">Train No: 12213</p>
+        </div>
+
+        <div class="status">Few Seats Left</div>
+      </div>
+
+      <div class="route">
+        <div class="station">
+          <h2>20:15</h2>
+          <p>Mumbai</p>
+        </div>
+
+        <div class="duration">
+          <p>13h 40m</p>
+          <p>Non Stop</p>
+        </div>
+
+        <div class="station">
+          <h2>09:55</h2>
+          <p>Kolkata</p>
+        </div>
+      </div>
+
+      <div class="train-bottom">
+        <div class="features">
+          <span class="feature">Sleeper</span>
+          <span class="feature">Charging Port</span>
+          <span class="feature">Pantry</span>
+        </div>
+
+        <div>
+          <div class="price">₹1,450</div>
+          <button onclick="scrollToBooking('Duronto Express')">Book Ticket</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="booking-section" id="bookingSection">
+
+    <h2 id="trainTitle">Select Your Seats</h2>
+
+    <div class="coach">
+      <div class="coach-title">Coach B1</div>
+      <div class="seat-layout" id="seatLayout"></div>
+    </div>
+
+    <div class="summary">
+      <h3>Selected Seats: <span id="selectedSeats">None</span></h3>
+      <h2>Total Fare: ₹<span id="totalPrice">0</span></h2>
+      <button onclick="confirmBooking()">Confirm Train Booking</button>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 RailConnect Train Reservation Platform</p>
+  </footer>
+
+  <script>
+    const seatLayout = document.getElementById('seatLayout');
+    const selectedSeatsText = document.getElementById('selectedSeats');
+    const totalPriceText = document.getElementById('totalPrice');
+    const trainTitle = document.getElementById('trainTitle');
+
+    const seatPrice = 450;
+    let selectedSeats = [];
+    let selectedTrain = 'Train';
+
+    function createSeats() {
+      for (let i = 1; i <= 32; i++) {
+        const seat = document.createElement('div');
+        seat.classList.add('seat');
+        seat.innerText = 'B' + i;
+
+        if ([3, 7, 11, 16, 22, 29].includes(i)) {
+          seat.classList.add('booked');
+        }
+
+        seat.addEventListener('click', () => {
+          if (seat.classList.contains('booked')) return;
+
+          seat.classList.toggle('selected');
+
+          const seatNo = 'B' + i;
+
+          if (seat.classList.contains('selected')) {
+            selectedSeats.push(seatNo);
+          } else {
+            selectedSeats = selectedSeats.filter(s => s !== seatNo);
+          }
+
+          updateSummary();
+        });
+
+        seatLayout.appendChild(seat);
+      }
+    }
+
+    function updateSummary() {
+      selectedSeatsText.innerText = selectedSeats.length
+        ? selectedSeats.join(', ')
+        : 'None';
+
+      totalPriceText.innerText = selectedSeats.length * seatPrice;
+    }
+
+    function searchTrains() {
+      alert('Searching available trains...');
+    }
+
+    function scrollToBooking(train) {
+      selectedTrain = train;
+      trainTitle.innerText = `${train} - Select Your Seats`;
+
+      document.getElementById('bookingSection').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    function confirmBooking() {
+      if (selectedSeats.length === 0) {
+        alert('Please select at least one seat.');
+        return;
+      }
+
+      alert(
+        `Train Ticket Confirmed!\n\nTrain: ${selectedTrain}\nSeats: ${selectedSeats.join(', ')}\nTotal Fare: ₹${selectedSeats.length * seatPrice}`
+      );
+    }
+
+    createSeats();
+  </script>
+
+</body>
+</html>

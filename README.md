@@ -24,7 +24,8 @@ docker build -t movieimage ./movie
 docker build -t busimage ./bus
 docker build -t flightimage ./flight
 docker build -t trainimage ./train
-3. Start the services
+
+**3. Start the services**
 Use Docker Compose to bring everything up:
 
 bash

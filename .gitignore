@@ -1,0 +1,37 @@
+# System files
+.bashrc
+.bash_profile
+.bash_logout
+.cshrc
+.tcshrc
+.viminfo
+
+# SSH keys
+.ssh/
+
+# Cache and temp
+.cache/
+*.swp
+*.swo
+*.tmp
+
+# Docker local config
+.docker/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+.venv/
+
+# Logs
+*.log
+
+# Node.js (if used)
+node_modules/
+npm-debug.log
+yarn-error.log
+

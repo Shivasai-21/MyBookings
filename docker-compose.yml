@@ -2,25 +2,53 @@ version: "3.8"
 services:
   movie:
     container_name: moviecontainer
-    image: movieimage
+    build: ./movie/
     ports:
       - "1111:80"
+    networks:
+      - movie_network
+    volumes:
+      - movie:/opt/movievolume01
 
   bus:
     container_name: buscontainer
-    image: busimage
+    build: ./bus/
     ports:
       - "2222:80"
+    networks:
+      - bus_network
+      - train_network
+    volumes:
+      - bus:/opt/busvolume01
 
   flight:
     container_name: flightcontainer
-    image: flightimage
+    build: ./flight/
     ports:
       - "3333:80"
+    networks:
+      - flight_network
+      - movie_network
 
   train:
     container_name: traincontainer
-    image: trainimage
+    build: ./train/
     ports:
       - "4444:80"
+    networks:
+      - train_network
+      - bus_network
 
+networks:
+  flight_network:
+    driver: bridge
+  bus_network:
+    driver: bridge
+  train_network:
+    driver: bridge
+  movie_network:
+    driver: bridge 
+
+volumes:
+  movie:
+  bus:

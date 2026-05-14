@@ -53,7 +53,4 @@ volumes:
   movie:
   bus:
 
-test-service:
-  build: ./tests
-  image: dev-tests
-  command: ["pytest", "-v"]
+
